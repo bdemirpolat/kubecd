@@ -1,0 +1,134 @@
+{
+	"info": {
+		"_postman_id": "4de3e4cc-b3e7-4d60-8997-353807a3aa74",
+		"name": "kubecd",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Application with ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/applications/1",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"applications",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Applications",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/applications?page=1&limit=5",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"applications"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Application",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"myapp\",\n    \"interval\": 30000,\n    \"url\": \"https://github.com/bdemirpolat/myapp.git\",\n    \"manifest_dir\": \"argocd\",\n    \"username\": \"bdemirpolat\",\n    \"token\": \"\",\n    \"branch\": \"master\"\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/applications",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"applications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Application",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":1,\n    \"name\": \"myapp\",\n    \"interval\": 30000,\n    \"url\": \"https://github.com/bdemirpolat/myapp.git\",\n    \"manifest_dir\": \"argocd\",\n    \"username\": \"bdemirpolat\",\n    \"token\": \"\",\n    \"branch\": \"master\"\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/applications/1",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"applications",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "HOST",
+			"value": "localhost:3001",
+			"type": "string"
+		}
+	]
+}
