@@ -64,8 +64,10 @@ func clone(repo RepoInterface, application models.Application) {
 	}
 
 	for _, f := range files {
-		time.Sleep(time.Millisecond * 1500)
-		applyErr := k8apply.Apply(f)
+		resultChan := make(chan error)
+		k8apply.AddToApplyQueue(f, resultChan)
+		applyErr := <-resultChan
+		fmt.Println("apply err:", applyErr)
 		if applyErr != nil {
 			logger.SugarLogger.Error(applyErr)
 			application.LastStatusMessage = fmt.Sprintf(failedLastStatusMessage, application.Name, err.Error())

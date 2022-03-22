@@ -21,6 +21,11 @@ var restConfig *rest.Config
 var clientset *kubernetes.Clientset
 var decoder runtime.Decoder
 
+func init() {
+	applyChan = make(chan ApplyWithChan)
+	go consumeApplies()
+}
+
 func InitKubeClient() error {
 	var kubeconfig *string
 	if home := homedir.HomeDir(); home != "" {
@@ -49,12 +54,28 @@ func decodeObj(data []byte) (runtime.Object, error) {
 	return obj, err
 }
 
-var applyChan chan []byte
+type ApplyWithChan struct {
+	Data []byte
+	C    chan error
+}
+
+var applyChan chan ApplyWithChan
 var lastApply = time.Now()
 
-func A(data []byte) {
+func AddToApplyQueue(data []byte, c chan error) {
+	applyChan <- ApplyWithChan{
+		Data: data,
+		C:    c,
+	}
+}
+
+func consumeApplies() {
 	for d := range applyChan {
-		Apply(d)
+		diff := time.Now().Sub(lastApply)
+		if diff < time.Millisecond*2000 {
+			time.Sleep(time.Millisecond * 2000)
+		}
+		d.C <- Apply(d.Data)
 	}
 }
 
