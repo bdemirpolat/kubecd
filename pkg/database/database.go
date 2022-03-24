@@ -1,10 +1,11 @@
 package database
 
 import (
+	"os"
+
 	"github.com/bdemirpolat/kubecd/pkg/models"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	"os"
 )
 
 const defaultDBfile = "/etc/kubecd/kubecd.db"
@@ -16,7 +17,13 @@ func Init() (*gorm.DB, error) {
 	}
 	var err error
 	db, err := gorm.Open(sqlite.Open(dbFile), &gorm.Config{})
+	if err != nil {
+		return nil, err
+	}
 	db = db.Debug()
-	db.AutoMigrate(&models.Application{})
+	err = db.AutoMigrate(&models.Application{})
+	if err != nil {
+		return nil, err
+	}
 	return db, err
 }

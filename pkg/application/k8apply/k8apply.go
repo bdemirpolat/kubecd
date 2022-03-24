@@ -1,7 +1,11 @@
 package k8apply
 
 import (
-	"flag"
+	"os"
+	"path/filepath"
+	"strings"
+	"time"
+
 	"k8s.io/apimachinery/pkg/api/meta"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
@@ -12,33 +16,40 @@ import (
 	"k8s.io/client-go/restmapper"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/util/homedir"
-	"path/filepath"
-	"strings"
-	"time"
 )
 
-var restConfig *rest.Config
-var clientset *kubernetes.Clientset
-var decoder runtime.Decoder
+var (
+	restConfig *rest.Config
+	clientset  *kubernetes.Clientset
+	decoder    runtime.Decoder
+)
 
 func init() {
 	applyChan = make(chan ApplyWithChan)
 	go consumeApplies()
 }
 
+// InitKubeClient initializes kubernetes client with CLUSTER_TYPE choose
 func InitKubeClient() error {
-	var kubeconfig *string
-	if home := homedir.HomeDir(); home != "" {
-		kubeconfig = flag.String("kubeconfig", filepath.Join(home, ".kube", "config"), "(optional) absolute path to the kubeconfig file")
-	} else {
-		kubeconfig = flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
-	}
-	flag.Parse()
-
+	var kubeConfig *string
 	var err error
-	restConfig, err = clientcmd.BuildConfigFromFlags("", *kubeconfig)
-	if err != nil {
-		return err
+
+	if os.Getenv("KUBECD_CLUSTER_TYPE") == "OUT_OF_CLUSTER" {
+		if kubeconfigFromEnv := os.Getenv("KUBECONFIG"); kubeconfigFromEnv != "" {
+			kubeConfig = &kubeconfigFromEnv
+		} else {
+			kubeConfigWithHomeDir := filepath.Join(homedir.HomeDir(), ".kube", "config")
+			kubeConfig = &kubeConfigWithHomeDir
+		}
+		restConfig, err = clientcmd.BuildConfigFromFlags("", *kubeConfig)
+		if err != nil {
+			return err
+		}
+	} else {
+		restConfig, err = rest.InClusterConfig()
+		if err != nil {
+			return err
+		}
 	}
 
 	clientset, err = kubernetes.NewForConfig(restConfig)
@@ -49,6 +60,7 @@ func InitKubeClient() error {
 	return nil
 }
 
+// decodeObj decodes raw yaml or json files to runtime.Object
 func decodeObj(data []byte) (runtime.Object, error) {
 	obj, _, err := decoder.Decode(data, nil, nil)
 	return obj, err
@@ -59,9 +71,13 @@ type ApplyWithChan struct {
 	C    chan error
 }
 
+// applyChan uses for queue mechanism, all kubernetes manifests must apply with this chan because of kubernetes rate limit
 var applyChan chan ApplyWithChan
+
+// lastApply uses for detecting rate limit diff
 var lastApply = time.Now()
 
+// AddToApplyQueue adds raw manifest to applyChan
 func AddToApplyQueue(data []byte, c chan error) {
 	applyChan <- ApplyWithChan{
 		Data: data,
@@ -69,9 +85,10 @@ func AddToApplyQueue(data []byte, c chan error) {
 	}
 }
 
+// consumeApplies consumes applyChan
 func consumeApplies() {
 	for d := range applyChan {
-		diff := time.Now().Sub(lastApply)
+		diff := time.Since(lastApply)
 		if diff < time.Millisecond*2000 {
 			time.Sleep(time.Millisecond * 2000)
 		}
@@ -79,6 +96,7 @@ func consumeApplies() {
 	}
 }
 
+// Apply like kubectl apply, tries to create new object, if it exists tries to replace
 func Apply(data []byte) error {
 	lastApply = time.Now()
 	decodedObj, err := decodeObj(data)
@@ -93,6 +111,7 @@ func Apply(data []byte) error {
 	return nil
 }
 
+// applyObject applies with runtime.Object, tries to create, if it exists tries to replace
 func applyObject(kubeClientset kubernetes.Interface, restConfig rest.Config, obj runtime.Object) (runtime.Object, error) {
 	groupResources, err := restmapper.GetAPIGroupResources(kubeClientset.Discovery())
 	if err != nil {
@@ -123,7 +142,7 @@ func applyObject(kubeClientset kubernetes.Interface, restConfig rest.Config, obj
 	}
 	restHelper := resource.NewHelper(restClient, mapping)
 
-	//_, err = restHelper.DeleteWithOptions(namespace, name, &metav1.DeleteOptions{})
+	// _, err = restHelper.DeleteWithOptions(namespace, name, &metav1.DeleteOptions{})
 
 	_, err = restHelper.Create(namespace, true, obj)
 	if err != nil && strings.Contains(err.Error(), "already exists") {
@@ -132,6 +151,7 @@ func applyObject(kubeClientset kubernetes.Interface, restConfig rest.Config, obj
 	return obj, err
 }
 
+// newRestClient
 func newRestClient(restConfig rest.Config, gv schema.GroupVersion) (rest.Interface, error) {
 	restConfig.ContentConfig = resource.UnstructuredPlusDefaultContentConfig()
 	restConfig.GroupVersion = &gv

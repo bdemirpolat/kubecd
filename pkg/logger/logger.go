@@ -9,7 +9,6 @@ func Init() (*zap.Logger, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer logger.Sync() // flushes buffer, if any
 	SugarLogger = logger.Sugar()
 	return logger, nil
 }

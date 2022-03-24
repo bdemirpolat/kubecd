@@ -1,6 +1,11 @@
 package main
 
 import (
+	"log"
+	"os"
+	"os/signal"
+	"syscall"
+
 	"github.com/bdemirpolat/kubecd/pkg/application"
 	"github.com/bdemirpolat/kubecd/pkg/application/k8apply"
 	"github.com/bdemirpolat/kubecd/pkg/database"
@@ -14,7 +19,12 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	defer l.Sync()
+	defer func() {
+		syncErr := l.Sync()
+		if syncErr != nil {
+			log.Fatal(err)
+		}
+	}()
 
 	// init database
 	db, err := database.Init()
@@ -40,9 +50,14 @@ func main() {
 		logger.SugarLogger.Fatal(err)
 	}
 
-	err = app.Listen(":3001")
-	if err != nil {
-		logger.SugarLogger.Fatal(err)
-	}
+	go func() {
+		listenErr := app.Listen(":3001")
+		if listenErr != nil {
+			logger.SugarLogger.Fatal(listenErr)
+		}
+	}()
 
+	interruptSignal := make(chan os.Signal, 1)
+	signal.Notify(interruptSignal, syscall.SIGINT, syscall.SIGTERM, os.Interrupt)
+	<-interruptSignal
 }

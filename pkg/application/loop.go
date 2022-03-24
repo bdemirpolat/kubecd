@@ -3,12 +3,14 @@ package application
 import (
 	"context"
 	"fmt"
-	"github.com/bdemirpolat/kubecd/pkg/models"
 	"time"
+
+	"github.com/bdemirpolat/kubecd/pkg/models"
 )
 
 var cancel context.CancelFunc
 
+// Loop starts loop for every application with given interval, if application config changes cancels to all go routines and creates again
 func Loop(repo RepoInterface) error {
 	// do not trigger cancel func at the first call fo Renew function
 	if cancel != nil {
