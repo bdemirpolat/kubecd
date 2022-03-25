@@ -1,8 +1,8 @@
 package application
 
 import (
-	"github.com/bdemirpolat/kubecd/pkg/logger"
-	"github.com/bdemirpolat/kubecd/pkg/models"
+	"github.com/bdemirpolat/kubecd/logger"
+	"github.com/bdemirpolat/kubecd/models"
 	"gorm.io/gorm"
 )
 

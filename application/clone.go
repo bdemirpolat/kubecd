@@ -2,13 +2,13 @@ package application
 
 import (
 	"fmt"
+	"github.com/bdemirpolat/kubecd/application/k8apply"
+	"github.com/bdemirpolat/kubecd/logger"
+	"github.com/bdemirpolat/kubecd/models"
 	"io/ioutil"
 	"os"
 	"time"
 
-	"github.com/bdemirpolat/kubecd/pkg/application/k8apply"
-	"github.com/bdemirpolat/kubecd/pkg/logger"
-	"github.com/bdemirpolat/kubecd/pkg/models"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing/transport/http"
 )

@@ -1,12 +1,12 @@
 package main
 
 import (
+	application2 "github.com/bdemirpolat/kubecd/application"
+	"github.com/bdemirpolat/kubecd/application/k8apply"
+	"github.com/bdemirpolat/kubecd/database"
+	"github.com/bdemirpolat/kubecd/logger"
 	"os"
 
-	"github.com/bdemirpolat/kubecd/pkg/application"
-	"github.com/bdemirpolat/kubecd/pkg/application/k8apply"
-	"github.com/bdemirpolat/kubecd/pkg/database"
-	"github.com/bdemirpolat/kubecd/pkg/logger"
 	"github.com/urfave/cli/v2"
 )
 
@@ -32,9 +32,9 @@ func main() {
 	}
 
 	// init rest server
-	applicationRepo := application.NewRepo(db)
-	applicationService := application.NewService(applicationRepo)
-	applicationCLIHandler := application.NewCLIHandler(applicationService)
+	applicationRepo := application2.NewRepo(db)
+	applicationService := application2.NewService(applicationRepo)
+	applicationCLIHandler := application2.NewCLIHandler(applicationService)
 	app := &cli.App{}
 	applicationCLIHandler.RegisterCommands(app)
 

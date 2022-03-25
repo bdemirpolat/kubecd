@@ -1,9 +1,9 @@
 package database
 
 import (
+	"github.com/bdemirpolat/kubecd/models"
 	"os"
 
-	"github.com/bdemirpolat/kubecd/pkg/models"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )

@@ -2,8 +2,7 @@ package application
 
 import (
 	"errors"
-
-	"github.com/bdemirpolat/kubecd/pkg/models"
+	"github.com/bdemirpolat/kubecd/models"
 )
 
 // ServiceInterface contains service functions

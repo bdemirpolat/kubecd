@@ -1,8 +1,8 @@
 package application
 
 import (
-	"github.com/bdemirpolat/kubecd/pkg/models"
-	"github.com/bdemirpolat/kubecd/pkg/validate"
+	models2 "github.com/bdemirpolat/kubecd/models"
+	"github.com/bdemirpolat/kubecd/validate"
 	"github.com/gofiber/fiber/v2"
 	"github.com/spf13/cast"
 )
@@ -31,98 +31,98 @@ var _ HandlerInterface = &HandlerStruct{}
 
 // CreateHandler validates create request and sends to service
 func (h *HandlerStruct) CreateHandler(c *fiber.Ctx) error {
-	req := models.ApplicationCreateReq{}
+	req := models2.ApplicationCreateReq{}
 	err := c.BodyParser(&req)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(models.HTTPResponseJSON{
+		return c.Status(fiber.StatusBadRequest).JSON(models2.HTTPResponseJSON{
 			Error: err.Error(),
 		})
 	}
 
 	err = validate.Validate.Struct(req)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(models.HTTPResponseJSON{
+		return c.Status(fiber.StatusBadRequest).JSON(models2.HTTPResponseJSON{
 			Error: err.Error(),
 		})
 	}
 
 	res, err := h.service.CreateService(req)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(models.HTTPResponseJSON{
+		return c.Status(fiber.StatusBadRequest).JSON(models2.HTTPResponseJSON{
 			Error: err.Error(),
 		})
 	}
-	return c.Status(fiber.StatusOK).JSON(models.HTTPResponseJSON{
+	return c.Status(fiber.StatusOK).JSON(models2.HTTPResponseJSON{
 		Data: res,
 	})
 }
 
 // UpdateHandler validates update request and sends to service
 func (h *HandlerStruct) UpdateHandler(c *fiber.Ctx) error {
-	req := models.ApplicationUpdateReq{}
+	req := models2.ApplicationUpdateReq{}
 	err := c.BodyParser(&req)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(models.HTTPResponseJSON{
+		return c.Status(fiber.StatusBadRequest).JSON(models2.HTTPResponseJSON{
 			Error: err.Error(),
 		})
 	}
 	req.ID = cast.ToUint(c.Params("id"))
 	err = validate.Validate.Struct(req)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(models.HTTPResponseJSON{
+		return c.Status(fiber.StatusBadRequest).JSON(models2.HTTPResponseJSON{
 			Error: err.Error(),
 		})
 	}
 	res, err := h.service.UpdateService(req)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(models.HTTPResponseJSON{
+		return c.Status(fiber.StatusBadRequest).JSON(models2.HTTPResponseJSON{
 			Error: err.Error(),
 		})
 	}
-	return c.Status(fiber.StatusOK).JSON(models.HTTPResponseJSON{
+	return c.Status(fiber.StatusOK).JSON(models2.HTTPResponseJSON{
 		Data: res,
 	})
 }
 
 // GetHandler validates get request and sends to service
 func (h *HandlerStruct) GetHandler(c *fiber.Ctx) error {
-	req := models.ApplicationGetReq{}
+	req := models2.ApplicationGetReq{}
 	req.ID = cast.ToUint(c.Params("id"))
 
 	err := validate.Validate.Struct(req)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(models.HTTPResponseJSON{
+		return c.Status(fiber.StatusBadRequest).JSON(models2.HTTPResponseJSON{
 			Error: err.Error(),
 		})
 	}
 
 	res, err := h.service.GetService(req)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(models.HTTPResponseJSON{
+		return c.Status(fiber.StatusBadRequest).JSON(models2.HTTPResponseJSON{
 			Error: err.Error(),
 		})
 	}
-	return c.Status(fiber.StatusOK).JSON(models.HTTPResponseJSON{
+	return c.Status(fiber.StatusOK).JSON(models2.HTTPResponseJSON{
 		Data: res.Data,
 	})
 }
 
 // ListHandler validates list request and sends to service
 func (h *HandlerStruct) ListHandler(c *fiber.Ctx) error {
-	req := models.ApplicationListReq{}
+	req := models2.ApplicationListReq{}
 	err := c.QueryParser(&req)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(models.HTTPResponseJSON{
+		return c.Status(fiber.StatusBadRequest).JSON(models2.HTTPResponseJSON{
 			Error: err.Error(),
 		})
 	}
 	res, err := h.service.ListService(req)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(models.HTTPResponseJSON{
+		return c.Status(fiber.StatusBadRequest).JSON(models2.HTTPResponseJSON{
 			Error: err.Error(),
 		})
 	}
-	return c.Status(fiber.StatusOK).JSON(models.HTTPResponseJSON{
+	return c.Status(fiber.StatusOK).JSON(models2.HTTPResponseJSON{
 		Data: res.Data,
 	})
 }

@@ -1,15 +1,15 @@
 package main
 
 import (
+	application2 "github.com/bdemirpolat/kubecd/application"
+	"github.com/bdemirpolat/kubecd/application/k8apply"
+	"github.com/bdemirpolat/kubecd/database"
+	"github.com/bdemirpolat/kubecd/logger"
 	"log"
 	"os"
 	"os/signal"
 	"syscall"
 
-	"github.com/bdemirpolat/kubecd/pkg/application"
-	"github.com/bdemirpolat/kubecd/pkg/application/k8apply"
-	"github.com/bdemirpolat/kubecd/pkg/database"
-	"github.com/bdemirpolat/kubecd/pkg/logger"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -38,14 +38,14 @@ func main() {
 	}
 
 	// init rest server
-	applicationRepo := application.NewRepo(db)
-	applicationService := application.NewService(applicationRepo)
-	applicationHandler := application.NewHandler(applicationService)
+	applicationRepo := application2.NewRepo(db)
+	applicationService := application2.NewService(applicationRepo)
+	applicationHandler := application2.NewHandler(applicationService)
 
 	app := fiber.New()
 	applicationHandler.RegisterHandlers(app)
 
-	err = application.Loop(applicationRepo)
+	err = application2.Loop(applicationRepo)
 	if err != nil {
 		logger.SugarLogger.Fatal(err)
 	}

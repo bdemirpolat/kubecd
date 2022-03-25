@@ -3,9 +3,8 @@ package application
 import (
 	"context"
 	"fmt"
+	"github.com/bdemirpolat/kubecd/models"
 	"time"
-
-	"github.com/bdemirpolat/kubecd/pkg/models"
 )
 
 var cancel context.CancelFunc

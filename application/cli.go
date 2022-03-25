@@ -3,11 +3,11 @@ package application
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/bdemirpolat/kubecd/models"
+	"github.com/bdemirpolat/kubecd/validate"
 	"io/ioutil"
 	"os"
 
-	"github.com/bdemirpolat/kubecd/pkg/models"
-	"github.com/bdemirpolat/kubecd/pkg/validate"
 	"github.com/pkg/errors"
 	"github.com/urfave/cli/v2"
 )
