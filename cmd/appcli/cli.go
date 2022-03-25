@@ -1,7 +1,7 @@
 package main
 
 import (
-	application2 "github.com/bdemirpolat/kubecd/application"
+	"github.com/bdemirpolat/kubecd/application"
 	"github.com/bdemirpolat/kubecd/application/k8apply"
 	"github.com/bdemirpolat/kubecd/database"
 	"github.com/bdemirpolat/kubecd/logger"
@@ -32,9 +32,9 @@ func main() {
 	}
 
 	// init rest server
-	applicationRepo := application2.NewRepo(db)
-	applicationService := application2.NewService(applicationRepo)
-	applicationCLIHandler := application2.NewCLIHandler(applicationService)
+	applicationRepo := application.NewRepo(db)
+	applicationService := application.NewService(applicationRepo)
+	applicationCLIHandler := application.NewCLIHandler(applicationService)
 	app := &cli.App{Name: "kubecd", Usage: "kubecd command [command options] [arguments...]"}
 	applicationCLIHandler.RegisterCommands(app)
 
