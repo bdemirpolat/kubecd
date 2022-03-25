@@ -35,7 +35,7 @@ func main() {
 	applicationRepo := application2.NewRepo(db)
 	applicationService := application2.NewService(applicationRepo)
 	applicationCLIHandler := application2.NewCLIHandler(applicationService)
-	app := &cli.App{}
+	app := &cli.App{Name: "kubecd", Usage: "kubecd command [command options] [arguments...]"}
 	applicationCLIHandler.RegisterCommands(app)
 
 	err = app.Run(os.Args)
