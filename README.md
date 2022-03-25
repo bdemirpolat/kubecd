@@ -6,6 +6,11 @@ kubecd check your git repository at regular intervals and
 if detect any changes in your specified k8s manifest directory, sends new manifests to kubernetes.
 
 
+
+
+# Development
+This part contains information about how to start develop kubecd. 
+
 ### Specify database file
 ```
 export KUBECD_DBFILE="/Users/X/kubecd/kubecd.db"
@@ -31,3 +36,11 @@ If kubecd working in same cluster with your repositories you do not need to set 
 ```
 go run cmd/appserver/server.go
 ```
+
+## Run CLI
+```
+go run cmd/appcli/cli.go application --help
+```
+
+
+
