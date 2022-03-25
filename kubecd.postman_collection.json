@@ -57,7 +57,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"myapp\",\n    \"interval\": 30000,\n    \"url\": \"https://github.com/bdemirpolat/myapp.git\",\n    \"manifest_dir\": \"argocd\",\n    \"username\": \"bdemirpolat\",\n    \"token\": \"\",\n    \"branch\": \"master\"\n  }",
+					"raw": "{\n    \"name\": \"myapp1\",\n    \"interval\": 30000,\n    \"url\": \"https://github.com/bdemirpolat/myapp.git\",\n    \"manifest_dir\": \"kubecd\",\n    \"username\": \"bdemirpolat\",\n    \"token\": \"\",\n    \"branch\": \"master\"\n  }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -83,7 +83,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\":1,\n    \"name\": \"myapp\",\n    \"interval\": 30000,\n    \"url\": \"https://github.com/bdemirpolat/myapp.git\",\n    \"manifest_dir\": \"argocd\",\n    \"username\": \"bdemirpolat\",\n    \"token\": \"\",\n    \"branch\": \"master\"\n  }",
+					"raw": "{\n    \"id\":1,\n    \"name\": \"myapp\",\n    \"interval\": 30000,\n    \"url\": \"https://github.com/bdemirpolat/myapp.git\",\n    \"manifest_dir\": \"kubecd\",\n    \"username\": \"bdemirpolat\",\n    \"token\": \"\",\n    \"branch\": \"master\"\n  }",
 					"options": {
 						"raw": {
 							"language": "json"
