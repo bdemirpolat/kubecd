@@ -1,83 +1,83 @@
 openapi: 3.0.0
 info:
-title: kubecd
-version: 1.0.0
+  title: kubecd
+  version: 1.0.0
 servers:
-- url: http://{{host}}
+  - url: http://{{host}}
 paths:
-/applications/1:
-get:
-tags:
-- General
-summary: Get Application with ID
-responses:
-'200':
-description: Successful response
-content:
-application/json: {}
-put:
-tags:
-- General
-summary: Update Application
-requestBody:
-content:
-application/json:
-schema:
-type: object
-example:
-id: 1
-name: myapp
-interval: 30000
-url: https://github.com/bdemirpolat/myapp.git
-manifest_dir: kubecd
-username: bdemirpolat
-token: ''
-branch: master
-responses:
-'200':
-description: Successful response
-content:
-application/json: {}
-/applications:
-get:
-tags:
-- General
-summary: List Applications
-parameters:
-- name: page
-in: query
-schema:
-type: integer
-example: '1'
-- name: limit
-in: query
-schema:
-type: integer
-example: '5'
-responses:
-'200':
-description: Successful response
-content:
-application/json: {}
-post:
-tags:
-- General
-summary: Create Application
-requestBody:
-content:
-application/json:
-schema:
-type: object
-example:
-name: myapp1
-interval: 30000
-url: https://github.com/bdemirpolat/myapp.git
-manifest_dir: kubecd
-username: bdemirpolat
-token: ''
-branch: master
-responses:
-'200':
-description: Successful response
-content:
-application/json: {}
+  /applications/1:
+    get:
+      tags:
+        - General
+      summary: Get Application with ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    put:
+      tags:
+        - General
+      summary: Update Application
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id: 1
+                name: myapp
+                interval: 30000
+                url: https://github.com/bdemirpolat/myapp.git
+                manifest_dir: kubecd
+                username: bdemirpolat
+                token: ''
+                branch: master
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /applications:
+    get:
+      tags:
+        - General
+      summary: List Applications
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: '5'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - General
+      summary: Create Application
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: myapp1
+                interval: 30000
+                url: https://github.com/bdemirpolat/myapp.git
+                manifest_dir: kubecd
+                username: bdemirpolat
+                token: ''
+                branch: master
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
