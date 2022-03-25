@@ -1,0 +1,10 @@
+{
+  "id": 1,
+  "name": "myapp_UPDATED",
+  "interval": 30000,
+  "url": "https://github.com/XXXXXXXXXXX/myapp.git",
+  "manifest_dir": "k8smanifests",
+  "username": "XXXXXXXXXXX",
+  "token": "XXXXXXXXXXX",
+  "branch": "master"
+}

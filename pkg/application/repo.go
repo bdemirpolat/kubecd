@@ -1,6 +1,7 @@
 package application
 
 import (
+	"github.com/bdemirpolat/kubecd/pkg/logger"
 	"github.com/bdemirpolat/kubecd/pkg/models"
 	"gorm.io/gorm"
 )
@@ -28,12 +29,30 @@ var _ RepoInterface = &RepoStruct{}
 
 // Create creates new record with gorm.Create function
 func (r *RepoStruct) Create(application *models.Application) (uint, error) {
-	return application.ID, r.db.Create(application).Error
+	err := r.db.Create(application).Error
+	if err != nil {
+		return 0, err
+	}
+	err = Loop(r)
+	if err != nil {
+		logger.SugarLogger.Error(err)
+		return 0, err
+	}
+	return application.ID, nil
 }
 
 // Update updates a record with gorm.Updates function
 func (r *RepoStruct) Update(application *models.Application) (uint, error) {
-	return application.ID, r.db.Updates(application).Error
+	err := r.db.Updates(application).Error
+	if err != nil {
+		return 0, err
+	}
+	err = Loop(r)
+	if err != nil {
+		logger.SugarLogger.Error(err)
+		return 0, err
+	}
+	return application.ID, nil
 }
 
 // Get finds first record with the given id and gorm.First function

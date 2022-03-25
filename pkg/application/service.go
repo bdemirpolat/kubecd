@@ -41,11 +41,6 @@ func (s *ServiceStruct) CreateService(req models.ApplicationCreateReq) (*models.
 	if err != nil {
 		return nil, err
 	}
-
-	err = Loop(s.repo)
-	if err != nil {
-		return nil, err
-	}
 	return &models.ApplicationCreateRes{ID: id}, nil
 }
 
@@ -66,11 +61,6 @@ func (s *ServiceStruct) UpdateService(req models.ApplicationUpdateReq) (*models.
 		Token:       req.Token,
 	}
 	id, err := s.repo.Update(application)
-	if err != nil {
-		return nil, err
-	}
-
-	err = Loop(s.repo)
 	if err != nil {
 		return nil, err
 	}

@@ -20,7 +20,7 @@ func Init() (*gorm.DB, error) {
 	if err != nil {
 		return nil, err
 	}
-	db = db.Debug()
+	//db = db.Debug()
 	err = db.AutoMigrate(&models.Application{})
 	if err != nil {
 		return nil, err
