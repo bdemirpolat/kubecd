@@ -11,6 +11,7 @@ type ServiceInterface interface {
 	UpdateService(req models.ApplicationUpdateReq) (*models.ApplicationUpdateRes, error)
 	GetService(req models.ApplicationGetReq) (*models.ApplicationGetRes, error)
 	ListService(req models.ApplicationListReq) (*models.ApplicationListRes, error)
+	DeleteService(req models.ApplicationDeleteReq) (*models.ApplicationDeleteRes, error)
 }
 
 // ServiceStruct
@@ -82,4 +83,10 @@ func (s *ServiceStruct) ListService(req models.ApplicationListReq) (*models.Appl
 		return nil, err
 	}
 	return &models.ApplicationListRes{Data: applications}, nil
+}
+
+// DeleteService business logic layer for delete operation
+func (s *ServiceStruct) DeleteService(req models.ApplicationDeleteReq) (*models.ApplicationDeleteRes, error) {
+	err := s.repo.Delete(req.ID)
+	return &models.ApplicationDeleteRes{}, err
 }

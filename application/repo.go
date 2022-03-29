@@ -12,6 +12,7 @@ type RepoInterface interface {
 	Update(application *models.Application) (uint, error)
 	Get(id uint) (*models.Application, error)
 	List(page, limit int) (*[]models.Application, error)
+	Delete(id uint) error
 }
 
 // RepoStruct
@@ -82,4 +83,9 @@ func (r *RepoStruct) List(page, limit int) (*[]models.Application, error) {
 		q = q.Limit(limit)
 	}
 	return &applications, q.Find(&applications).Error
+}
+
+// Delete record
+func (r *RepoStruct) Delete(id uint) error {
+	return r.db.Delete(&models.Application{}, id).Error
 }

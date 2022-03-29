@@ -20,6 +20,7 @@ type CLIHandlerInterface interface {
 	UpdateCLIHandler(c *cli.Context) error
 	GetCLIHandler(c *cli.Context) error
 	ListCLIHandler(c *cli.Context) error
+	DeleteCLIHandler(c *cli.Context) error
 	RegisterCommands(app *cli.App)
 }
 
@@ -154,6 +155,19 @@ func (h *CLIHandlerStruct) ListCLIHandler(c *cli.Context) error {
 		return nil
 	}
 	fmt.Println(string(pretty))
+	return nil
+}
+
+// DeleteCLIHandler validates get request and sends to service
+func (h *CLIHandlerStruct) DeleteCLIHandler(c *cli.Context) error {
+	req := models.ApplicationDeleteReq{}
+	req.ID = c.Uint("id")
+	_, err := h.service.DeleteService(req)
+	if err != nil {
+		fmt.Println(err.Error())
+		return nil
+	}
+	fmt.Println("application deleted")
 	return nil
 }
 
