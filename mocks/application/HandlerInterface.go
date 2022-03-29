@@ -26,6 +26,20 @@ func (_m *HandlerInterface) CreateHandler(c *fiber.Ctx) error {
 	return r0
 }
 
+// DeleteHandler provides a mock function with given fields: c
+func (_m *HandlerInterface) DeleteHandler(c *fiber.Ctx) error {
+	ret := _m.Called(c)
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(*fiber.Ctx) error); ok {
+		r0 = rf(c)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
 // GetHandler provides a mock function with given fields: c
 func (_m *HandlerInterface) GetHandler(c *fiber.Ctx) error {
 	ret := _m.Called(c)

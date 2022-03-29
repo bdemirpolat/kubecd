@@ -26,6 +26,20 @@ func (_m *CLIHandlerInterface) CreateCLIHandler(c *cli.Context) error {
 	return r0
 }
 
+// DeleteCLIHandler provides a mock function with given fields: c
+func (_m *CLIHandlerInterface) DeleteCLIHandler(c *cli.Context) error {
+	ret := _m.Called(c)
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(*cli.Context) error); ok {
+		r0 = rf(c)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
 // GetCLIHandler provides a mock function with given fields: c
 func (_m *CLIHandlerInterface) GetCLIHandler(c *cli.Context) error {
 	ret := _m.Called(c)

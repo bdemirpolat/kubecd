@@ -8,6 +8,7 @@ require (
 	github.com/gofiber/fiber/v2 v2.29.0
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cast v1.4.1
+	github.com/stretchr/testify v1.7.0
 	github.com/urfave/cli/v2 v2.4.0
 	go.uber.org/zap v1.21.0
 	gorm.io/driver/sqlite v1.3.1
@@ -62,7 +63,7 @@ require (
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/sergi/go-diff v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/stretchr/testify v1.7.0 // indirect
+	github.com/stretchr/objx v0.2.0 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.34.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect

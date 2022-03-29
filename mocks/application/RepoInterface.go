@@ -33,6 +33,20 @@ func (_m *RepoInterface) Create(_a0 *models.Application) (uint, error) {
 	return r0, r1
 }
 
+// Delete provides a mock function with given fields: id
+func (_m *RepoInterface) Delete(id uint) error {
+	ret := _m.Called(id)
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(uint) error); ok {
+		r0 = rf(id)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
 // Get provides a mock function with given fields: id
 func (_m *RepoInterface) Get(id uint) (*models.Application, error) {
 	ret := _m.Called(id)

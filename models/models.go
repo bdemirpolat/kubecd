@@ -59,3 +59,10 @@ type ApplicationListReq struct {
 type ApplicationListRes struct {
 	Data *[]Application `json:"data"`
 }
+
+type ApplicationDeleteReq struct {
+	ID uint `json:"id" validate:"required"`
+}
+
+type ApplicationDeleteRes struct {
+}

@@ -35,6 +35,29 @@ func (_m *ServiceInterface) CreateService(req models.ApplicationCreateReq) (*mod
 	return r0, r1
 }
 
+// DeleteService provides a mock function with given fields: req
+func (_m *ServiceInterface) DeleteService(req models.ApplicationDeleteReq) (*models.ApplicationDeleteRes, error) {
+	ret := _m.Called(req)
+
+	var r0 *models.ApplicationDeleteRes
+	if rf, ok := ret.Get(0).(func(models.ApplicationDeleteReq) *models.ApplicationDeleteRes); ok {
+		r0 = rf(req)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*models.ApplicationDeleteRes)
+		}
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(models.ApplicationDeleteReq) error); ok {
+		r1 = rf(req)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
 // GetService provides a mock function with given fields: req
 func (_m *ServiceInterface) GetService(req models.ApplicationGetReq) (*models.ApplicationGetRes, error) {
 	ret := _m.Called(req)
