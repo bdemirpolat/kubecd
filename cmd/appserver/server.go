@@ -1,7 +1,7 @@
 package main
 
 import (
-	application2 "github.com/bdemirpolat/kubecd/application"
+	"github.com/bdemirpolat/kubecd/application"
 	"github.com/bdemirpolat/kubecd/application/k8apply"
 	"github.com/bdemirpolat/kubecd/database"
 	"github.com/bdemirpolat/kubecd/logger"
@@ -38,14 +38,14 @@ func main() {
 	}
 
 	// init rest server
-	applicationRepo := application2.NewRepo(db)
-	applicationService := application2.NewService(applicationRepo)
-	applicationHandler := application2.NewHandler(applicationService)
+	applicationRepo := application.NewRepo(db)
+	applicationService := application.NewService(applicationRepo)
+	applicationHandler := application.NewHandler(applicationService)
 
 	app := fiber.New()
 	applicationHandler.RegisterHandlers(app)
 
-	err = application2.Loop(applicationRepo)
+	err = application.Loop(applicationRepo)
 	if err != nil {
 		logger.SugarLogger.Fatal(err)
 	}
