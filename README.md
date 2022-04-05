@@ -1,3 +1,10 @@
+![Version](https://img.shields.io/badge/version-0.0.0-orange.svg)
+![Test](https://github.com/bdemirpolat/kubecd/actions/workflows/kubecd.yml/badge.svg)
+![Go](https://img.shields.io/github/go-mod/go-version/bdemirpolat/kubecd)
+![MIT License](https://img.shields.io/github/license/bdemirpolat/kubecd)
+[![Documentation](https://godoc.org/github.com/bdemirpolat/kubecd?status.svg)](https://pkg.go.dev/github.com/bdemirpolat/kubecd)
+[![Go Report Card](https://goreportcard.com/badge/github.com/bdemirpolat/kubecd)](https://goreportcard.com/report/github.com/bdemirpolat/kubecd)
+
 ## What is kubecd?
 kubecd is a continous deployment tool for kubernetes.
 
