@@ -1,4 +1,4 @@
-![Version](https://img.shields.io/badge/version-0.0.1-orange.svg)
+![Version](https://img.shields.io/badge/version-0.0.2-orange.svg)
 ![Test](https://github.com/bdemirpolat/kubecd/actions/workflows/kubecd.yml/badge.svg)
 ![Go](https://img.shields.io/github/go-mod/go-version/bdemirpolat/kubecd)
 ![MIT License](https://img.shields.io/github/license/bdemirpolat/kubecd)
