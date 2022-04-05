@@ -8,15 +8,15 @@ on:
     - master
 
 jobs:
-  golangci:
-    name: Build Ubuntu for golangci-lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v2
-        with:
-          version: latest
+  # golangci:
+  #   name: Build Ubuntu for golangci-lint
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: golangci-lint
+  #       uses: golangci/golangci-lint-action@v2
+  #       with:
+  #         version: latest
   test:
     name: Build Ubuntu for testing kubecd
     runs-on: ubuntu-latest
